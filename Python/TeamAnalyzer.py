@@ -16,7 +16,24 @@ for i, arg in enumerate(sys.argv):
     if i == 0:
         continue
 
-    # Analyze the pokemon whose pokedex_number is in "arg"
+conn= sqlite3.connect("pokemon.sqlite")
+
+cursor = conn.cursor()
+cursor.execute("""SELECT DISTINCT name, type1, type2
+FROM pokemon_types_view
+WHERE name = 'Bulbasaur'
+""")
+
+cursor.execute("""SELECT name 
+FROM type
+WHERE '%against_%' > 1
+""")
+cursor.fetchall()
+
+sqlite3.commit()
+
+sqlite3.close()
+    # analyze the pokemon whose pokedex_number is in "arg"
 
     # You will need to write the SQL, extract the results, and compare
     # Remember to look at those "against_NNN" column values; greater than 1
@@ -31,4 +48,3 @@ if answer.upper() == "Y" or answer.upper() == "YES":
     print("Saving " + teamName + " ...")
 else:
     print("Bye for now!")
-
